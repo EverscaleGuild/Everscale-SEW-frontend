@@ -37,8 +37,11 @@ const ever = new ProviderRpcClient();
 
 export default function ActionAreaCard() {
     const [bets, setBets] = React.useState<any[]>([]);
-
-    const [game, setGame] = React.useState<string | null>(null);
+    
+    const [game, setGame] = React.useState({
+      0: '',
+      1: {hash: '', amount: ''}
+    });
     const loadBets = async () => {
       await ever.ensureInitialized();
 
@@ -61,7 +64,7 @@ export default function ActionAreaCard() {
       <CreateBet getList={loadBets}/>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', padding: 10, gap: '20px'}}>
         {bets.map((item) => (
-            <Card sx={{ maxWidth: 200 }} onClick={() => setGame('1')} className={item[1].beat ? "YesBet" : "NoBet"} key={item[0]}>
+            <Card sx={{ maxWidth: 200 }} onClick={() => setGame(item[1])} className={item[1].beat ? "YesBet" : "NoBet"} key={item[0]}>
                 <CardActionArea>
                     <CardMedia
                         component="img"
@@ -78,7 +81,10 @@ export default function ActionAreaCard() {
                 </CardActionArea>
             </Card>
         ))}
-        <Game gameHash={game} key={game} handleClose={() => setGame(null)} />
+        <Game game={game} handleClose={() => setGame({
+          0: '',
+          1: {hash: '', amount: ''}
+        })} />
       </Box>
       </Container>
     );

@@ -143,7 +143,6 @@ export const CreateBet: React.FC<ICreateBetProps> = (props) => {
       const hash = await getHashAndSave();
       localStorage.setItem('secret', `${betName} ${randomNumber}`);
       const selectedAddress = await getEverscaleWallet()
-      console.log(selectedAddress, 'selectedAddress')
       setLoading(true);
       const output = await (await Contract())
         .methods
@@ -159,7 +158,6 @@ export const CreateBet: React.FC<ICreateBetProps> = (props) => {
             setLoading(false);
             getList();
           });
-        console.log(output);
     };
 
     return (
